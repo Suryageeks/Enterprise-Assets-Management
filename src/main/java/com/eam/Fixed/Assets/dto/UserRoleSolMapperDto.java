@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRoleSolMapperDto {
-    private UUID id;
+    private Long id;
     @NotBlank(message = "Emp ID cannot be empty")
     @Digits(fraction = 0,integer = 10,message = "Emp ID must be within range of 10 numbers")
     private String users;

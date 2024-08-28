@@ -31,11 +31,11 @@ public class BranchDetailController {
         return new ResponseEntity<>(branch,HttpStatus.OK);
     }
 
-    @PutMapping("update/{solid}")
-    public ResponseEntity<BranchDetailsDto> updateBranch(@Valid @PathVariable("solid") String solid,@RequestBody BranchDetailsDto branch){
-        branch.setSolId(solid);
-        BranchDetailsDto update = branchService.updateBranch(branch);
-        return new ResponseEntity<>(update,HttpStatus.OK);
-    }
+//    @PutMapping("update/{solid}")
+//    public ResponseEntity<BranchDetailsDto> updateBranch(@Valid @PathVariable("solid") String solid,@RequestBody BranchDetailsDto branch){
+//        branch.setSolId(solid);
+//        BranchDetailsDto update = branchService.updateBranch(branch);
+//        return new ResponseEntity<>(update,HttpStatus.OK);
+//    }
 
 }

@@ -13,11 +13,12 @@ import java.util.UUID;
 @NoArgsConstructor
 public class BranchDetailsDto {
 
-    private UUID id;
+    private Long id;
     @NotBlank(message = "Sol ID cannot be empty")
     @Digits(fraction =  0,integer = 5,message = "Sol ID must be number")
     private String solId;
     @NotBlank(message = "Branch Name cannot be blank")
     private String branchName;
     private String branchType;
+
 }

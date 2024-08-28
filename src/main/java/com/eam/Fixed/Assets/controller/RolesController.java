@@ -13,7 +13,8 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/roles")
-public class RolesController {
+public class
+RolesController {
     private RolesService rolesService;
 
     @PostMapping

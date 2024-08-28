@@ -18,9 +18,9 @@ import java.util.UUID;
 @Table(name = "user_role_sol_mapper")
 public class UserRoleSolMapper {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false,columnDefinition = "char(36)")
-    private UUID id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "emp_id",referencedColumnName = "emp_id",nullable = false)
