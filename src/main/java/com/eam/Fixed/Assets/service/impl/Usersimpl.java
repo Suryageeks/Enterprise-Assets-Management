@@ -5,6 +5,7 @@ import com.eam.Fixed.Assets.entity.Users;
 import com.eam.Fixed.Assets.mapper.UserMapper;
 import com.eam.Fixed.Assets.repository.UserRepository;
 import com.eam.Fixed.Assets.service.UsersService;
+import com.eam.Fixed.Assets.utils.StatusEnum;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +21,7 @@ public class Usersimpl implements UsersService {
     public UsersDto createUser(UsersDto usersDto) {
         Users users = UserMapper.MAPPER.mapToUsers(usersDto);
         Users saveUserDetails = userRepository.save(users);
-        UsersDto saveInDB = UserMapper.MAPPER.mapToUsersDto(saveUserDetails);
-        return saveInDB;
+        return UserMapper.MAPPER.mapToUsersDto(saveUserDetails);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class Usersimpl implements UsersService {
     @Override
     public List<UsersDto> listUsers() {
         List<Users> users = userRepository.findAll();
-        return users.stream().map(val -> UserMapper.MAPPER.mapToUsersDto(val)).collect(Collectors.toList());
+        return users.stream().map(UserMapper.MAPPER::mapToUsersDto).collect(Collectors.toList());
     }
 
     @Override
@@ -59,8 +59,18 @@ public class Usersimpl implements UsersService {
         user.setDesignation(usersDto.getDesignation());
         user.setMobileNumber(usersDto.getMobileNumber());
         user.setState(usersDto.getState());
+        user.setStatus(StatusEnum.valueOf(usersDto.getStatus()));
 
         Users updateDetails = userRepository.save(user);
         return UserMapper.MAPPER.mapToUsersDto(updateDetails);
+    }
+
+    @Override
+    public String getStatus(String empId) {
+        Users user = userRepository.findByEmpId(empId).orElseThrow(
+                () -> new RuntimeException("No user exists")
+        );
+
+        return user.getStatus().toString();
     }
 }

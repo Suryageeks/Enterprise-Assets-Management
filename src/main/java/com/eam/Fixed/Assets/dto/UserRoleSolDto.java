@@ -7,13 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRoleSolMapperDto {
+public class UserRoleSolDto {
     private Long id;
     @NotBlank(message = "Emp ID cannot be empty")
     @Digits(fraction = 0,integer = 10,message = "Emp ID must be within range of 10 numbers")

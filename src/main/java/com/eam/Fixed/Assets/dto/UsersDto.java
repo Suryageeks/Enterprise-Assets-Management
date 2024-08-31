@@ -1,5 +1,7 @@
 package com.eam.Fixed.Assets.dto;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -24,4 +26,6 @@ public class UsersDto {
     @Digits(fraction = 0,integer = 10,message = "Mobile Number must be within range of 10 numbers")
     private int mobileNumber;
     private String designation;
+    @Enumerated(EnumType.STRING)
+    private String status;
 }

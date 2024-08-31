@@ -14,4 +14,7 @@ public interface UsersService {
     String deleteUser(String empId);
 
     UsersDto updateUserDetails(String empId,UsersDto usersDto);
+
+    String getStatus(String empId);
 }
+

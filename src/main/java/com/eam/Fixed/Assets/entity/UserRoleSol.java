@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -16,10 +14,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_role_sol_mapper")
-public class UserRoleSolMapper {
+public class UserRoleSol {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false,columnDefinition = "char(36)")
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

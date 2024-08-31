@@ -45,4 +45,10 @@ public class UserController {
         UsersDto user = usersService.updateUserDetails(empId,usersDto);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
+
+    @GetMapping("/{id}/status")
+    public ResponseEntity<String> getStatus(@PathVariable("id") String empId){
+        String user = usersService.getStatus(empId);
+        return new ResponseEntity<>(user,HttpStatus.OK);
+    }
 }
