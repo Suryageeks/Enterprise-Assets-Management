@@ -55,11 +55,11 @@ public class UserRoleSolimpl implements UserRoleSolService {
         );
 
         UserRoleSol userRoleSol = new UserRoleSol();
-        userRoleSol.setUsers(user);
+        userRoleSol.setUser(user);
         userRoleSol.setEmpName(user.getEmpName());
-        userRoleSol.setRoles(roles);
+        userRoleSol.setRole(roles);
         userRoleSol.setRoleName(roles.getRoleName());
-        userRoleSol.setBranchDetails(solid);
+        userRoleSol.setBranchDetail(solid);
         userRoleSol.setBranchName(solid.getBranchName());
 
         UserRoleSol saveData = userRoleSolRepository.save(userRoleSol);
@@ -74,7 +74,7 @@ public class UserRoleSolimpl implements UserRoleSolService {
 
     @Override
     public UserRoleSolDto getUserByIdOrName(String idOrName) {
-        Optional<UserRoleSol> user = userRoleSolRepository.findByEmpIdOrEmpName(idOrName,idOrName);
+        Optional<UserRoleSol> user = userRoleSolRepository.findByUserOrEmpName(idOrName,idOrName);
         UserRoleSol userInfo = user.orElseThrow(
                 () -> new RuntimeException("User not found")
         );

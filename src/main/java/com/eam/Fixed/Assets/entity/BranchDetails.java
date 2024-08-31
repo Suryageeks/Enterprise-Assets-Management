@@ -18,7 +18,7 @@ import java.util.UUID;
 public class BranchDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id",nullable = false,columnDefinition = "char(36)")
+    @Column(name = "id",nullable = false)
     private Long id;
     @Column(name = "sol_id",nullable = false, length = 30,unique = true)
     private String solId;

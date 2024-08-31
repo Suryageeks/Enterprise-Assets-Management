@@ -22,21 +22,21 @@ public class UserRoleSol {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "emp_id",referencedColumnName = "emp_id",nullable = false)
-    private Users users;
+    private Users user;
 
     @Column(name = "emp_name",nullable = false,length = 300)
     private String empName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id",referencedColumnName = "role_id",nullable = false)
-    private Roles roles;
+    private Roles role;
 
     @Column(name = "role_name", nullable = false, length = 50, unique = true)
     private String roleName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sol_id",referencedColumnName = "sol_id",nullable = false)
-    private BranchDetails branchDetails;
+    private BranchDetails branchDetail;
 
     @Column(name = "branch_name",nullable = false,length = 50)
     private String branchName;
