@@ -5,6 +5,7 @@ import com.eam.Fixed.Assets.entity.BranchDetails;
 import com.eam.Fixed.Assets.mapper.BranchDetailMapper;
 import com.eam.Fixed.Assets.repository.BranchRepository;
 import com.eam.Fixed.Assets.service.BranchService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
+@Transactional
 public class BranchDetailsimpl implements BranchService {
     private BranchRepository branchRepository;
     @Override

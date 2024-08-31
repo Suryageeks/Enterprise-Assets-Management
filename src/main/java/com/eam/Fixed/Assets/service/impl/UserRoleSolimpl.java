@@ -12,6 +12,7 @@ import com.eam.Fixed.Assets.repository.UserRepository;
 import com.eam.Fixed.Assets.repository.UserRoleSolRepository;
 import com.eam.Fixed.Assets.service.UserRoleSolService;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,20 +22,18 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class UserRoleSolimpl implements UserRoleSolService {
 
+    @Autowired
     private final UserRoleSolRepository userRoleSolRepository;
+    @Autowired
     private final UserRepository userRepository;
+    @Autowired
     private final RolesRepository rolesRepository;
+    @Autowired
     private final BranchRepository branchRepository;
 
-    @Autowired
-    public UserRoleSolimpl(UserRoleSolRepository userRoleSolRepository, UserRepository userRepository, RolesRepository rolesRepository, BranchRepository branchRepository) {
-        this.userRoleSolRepository = userRoleSolRepository;
-        this.userRepository = userRepository;
-        this.rolesRepository = rolesRepository;
-        this.branchRepository = branchRepository;
-    }
 
     @Override
     public UserRoleSolDto mapUsers(UserRoleSolDto users) {

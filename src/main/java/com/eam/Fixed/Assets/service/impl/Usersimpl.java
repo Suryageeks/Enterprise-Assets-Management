@@ -6,6 +6,7 @@ import com.eam.Fixed.Assets.mapper.UserMapper;
 import com.eam.Fixed.Assets.repository.UserRepository;
 import com.eam.Fixed.Assets.service.UsersService;
 import com.eam.Fixed.Assets.utils.StatusEnum;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class Usersimpl implements UsersService {
 
     private UserRepository userRepository;
