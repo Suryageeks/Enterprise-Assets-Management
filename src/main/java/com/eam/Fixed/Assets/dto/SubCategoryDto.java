@@ -13,7 +13,6 @@ import lombok.Setter;
 public class SubCategoryDto {
     private Long id;
     @NotBlank(message = "Category Name cannot be empty")
-    private String categoryName;
-    @NotBlank(message = "CategoryId cannot be empty")
+    private String subcategoryName;
     private Long categoryId;
 }

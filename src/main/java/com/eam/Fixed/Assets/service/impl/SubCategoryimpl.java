@@ -26,15 +26,20 @@ public class SubCategoryimpl implements SubCategoryService {
 
     @Override
     public SubCategoryDto createSubcategory(SubCategoryDto subCategoryDto) {
-        Category checkCategory = categoryRepository.findById(subCategoryDto.getCategoryId()).orElseThrow(
+        Category checkCategory = categoryRepository.findById(subCategoryDto.getId()).orElseThrow(
                 () -> new RuntimeException("Category does not exists")
         );
 
         SubCategory subCategory = new SubCategory();
         subCategory.setSubcategoryName(subCategory.getSubcategoryName());
-        subCategory.setCategoryId(subCategory.getCategoryId());
+        subCategory.setCategoryId(checkCategory);
         subCategoryRepository.save(subCategory);
-        return SubCategoryMapper.MAPPER.mapToSubcategoryDto(subCategory);
+
+        SubCategoryDto responseDto = new SubCategoryDto();
+        responseDto.setId(subCategory.getId());
+        responseDto.setSubcategoryName(subCategory.getSubcategoryName());
+        responseDto.setCategoryId(subCategory.getCategoryId().getId());
+        return responseDto;
     }
 
     @Override
@@ -48,10 +53,10 @@ public class SubCategoryimpl implements SubCategoryService {
 
     @Override
     public List<SubCategoryDto> getMappedSubCategoriesByCategoryId(Long categoryId) {
-        Category checkCategoryId = categoryRepository.findById(categoryId).orElseThrow(
+        Category checkCategory = categoryRepository.findById(categoryId).orElseThrow(
                 () -> new RuntimeException("Category does not exists")
         );
-        List<SubCategory> subCategories = subCategoryRepository.findByCategoryId(categoryId);
+        List<SubCategory> subCategories = subCategoryRepository.findByCategoryId(checkCategory);
         return subCategories.stream().map(SubCategoryMapper.MAPPER::mapToSubcategoryDto).collect(Collectors.toList());
     }
 
