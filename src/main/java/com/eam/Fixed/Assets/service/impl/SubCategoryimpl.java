@@ -26,19 +26,19 @@ public class SubCategoryimpl implements SubCategoryService {
 
     @Override
     public SubCategoryDto createSubcategory(SubCategoryDto subCategoryDto) {
-        Category checkCategory = categoryRepository.findById(subCategoryDto.getId()).orElseThrow(
+        Category checkCategory = categoryRepository.findById(subCategoryDto.getCategoryId()).orElseThrow(
                 () -> new RuntimeException("Category does not exists")
         );
 
         SubCategory subCategory = new SubCategory();
-        subCategory.setSubcategoryName(subCategory.getSubcategoryName());
+        subCategory.setSubcategoryName(subCategoryDto.getSubcategoryName());
         subCategory.setCategoryId(checkCategory);
         subCategoryRepository.save(subCategory);
 
         SubCategoryDto responseDto = new SubCategoryDto();
         responseDto.setId(subCategory.getId());
         responseDto.setSubcategoryName(subCategory.getSubcategoryName());
-        responseDto.setCategoryId(subCategory.getCategoryId().getId());
+        responseDto.setCategoryId(checkCategory.getId());
         return responseDto;
     }
 
