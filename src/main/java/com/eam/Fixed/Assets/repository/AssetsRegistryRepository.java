@@ -13,4 +13,5 @@ public interface AssetsRegistryRepository extends JpaRepository<AssetsRegistry,L
     @Query("SELECT ar FROM AssetsRegistry ar WHERE ar.CategoryId = :categoryId AND ar.subCategoryId = :subcategoryId")
     Optional<AssetsRegistry> findByCategoryIdAndSubCategoryId(@Param("categoryId") Long categoryId,@Param("subcategoryId") Long subcategoryId);
 
+    Optional<AssetsRegistry> findByAssetId(String assetsId);
 }
