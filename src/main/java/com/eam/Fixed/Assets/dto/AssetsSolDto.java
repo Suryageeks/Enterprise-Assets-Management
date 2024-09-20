@@ -20,7 +20,7 @@ public class AssetsSolDto {
     @NotBlank(message = "solId is must")
     private String solId;
     @NotBlank(message = "month is must")
-    private Month month;
+    private String month;
     @NotBlank(message = "year is must")
-    private Year year;
+    private String year;
 }

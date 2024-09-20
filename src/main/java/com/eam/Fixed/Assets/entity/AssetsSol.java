@@ -25,9 +25,9 @@ public class AssetsSol {
     @Column(name = "solId",nullable = false)
     private String solId;
     @Column(name = "month",nullable = false)
-    private Month month;
+    private String month;
     @Column(name = "year",nullable = false)
-    private Year year;
+    private String year;
     @Column(name = "created_at", nullable = false, updatable = false,insertable = false,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdAt;
     @Column(name = "updated_at", nullable = false, insertable = false,updatable = false,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
