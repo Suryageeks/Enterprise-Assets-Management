@@ -56,4 +56,10 @@ public class SummaryProcess {
 
     @Column(name = "reconciliation_type", nullable = false)
     private String reconciliationType;
+
+    @Column(name = "process_month",nullable = false)
+    private String month;
+
+    @Column(name = "process_year",nullable = false)
+    private String year;
 }

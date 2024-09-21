@@ -26,4 +26,6 @@ public class SummaryProcessDto {
     private String fnaId;
     private String fnaMaker;
     private String reconciliationType;
+    private String month;
+    private String year;
 }

@@ -69,6 +69,8 @@ public class SummaryProcessimpl implements SummaryProcessService {
                     summaryProcess.setFnaMaker(asset[9].toString());
                     summaryProcess.setReconciliationType(asset[10].toString());
                     summaryProcess.setStatus(WorkflowStatusEnum.PC);
+                    summaryProcess.setMonth(asset[11].toString());
+                    summaryProcess.setYear(asset[12].toString());
                     return summaryProcess;
                 }).collect(Collectors.toList());
 
@@ -96,7 +98,9 @@ public class SummaryProcessimpl implements SummaryProcessService {
                             asset[7].toString(),
                             asset[8].toString(),
                             asset[9].toString(),
-                            asset[10].toString()
+                            asset[10].toString(),
+                            asset[11].toString(),
+                            asset[12].toString()
                     );
                 }
         );
@@ -116,9 +120,17 @@ public class SummaryProcessimpl implements SummaryProcessService {
                             asset[7].toString(),
                             asset[8].toString(),
                             asset[9].toString(),
-                            asset[10].toString()
+                            asset[10].toString(),
+                            asset[11].toString(),
+                            asset[12].toString()
                     );
                 }
         );
     }
+
+    @Override
+    public List<Object[]> getAssetsByStatus(String status, String month, String year, String sol) {
+        return summaryProcessRepository.findExistingAssetByStatus(status, month, year, sol);
+    }
+
 }

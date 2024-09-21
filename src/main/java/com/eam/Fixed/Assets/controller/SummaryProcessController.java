@@ -5,10 +5,7 @@ import com.eam.Fixed.Assets.service.workflow.SummaryProcessService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,5 +33,16 @@ public class SummaryProcessController {
         }catch (Exception e){
             return new ResponseEntity<>("Data processing failed, Error" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+    @GetMapping("/get-assets/{status}/{month}/{year}/{sol}")
+    public ResponseEntity<List<Object[]>> getAssetByStatusAsPerRole(@PathVariable("status") String status,
+                                                                    @PathVariable("month") String month,
+                                                                    @PathVariable("year") String year,
+                                                                    @PathVariable("sol") String solId){
+        List<Object[]> getAssets = summaryProcessService.getAssetsByStatus(status, month, year, solId);
+        if(getAssets.isEmpty() || getAssets == null){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(getAssets);
     }
 }

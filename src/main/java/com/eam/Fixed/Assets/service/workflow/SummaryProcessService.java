@@ -9,4 +9,5 @@ public interface SummaryProcessService {
     void batchInsertAsset(List<Object[]> assets);
     void batchUpdateAssets(List<Object[]> assets);
     void batchUpdateAssetsInSendBack(List<Object[]> assets);
+    List<Object[]> getAssetsByStatus(String status,String month,String year,String sol);
 }

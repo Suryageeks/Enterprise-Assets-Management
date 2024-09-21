@@ -19,7 +19,7 @@ public interface SummaryProcessRepository extends JpaRepository<SummaryProcess, 
                    "SET asset_name = :assetName, sol_id = :solId, branch_name = :branchName, status = :status, " +
                    "maker_name = :makerName, checker_id = :checkerId, checker_name = :checkerName, fna_id = :fnaId, " +
                    "fna_maker = :fnaMaker, reconciliation_type = :reconciliationType " +
-                   "WHERE asset_id = :assetId", nativeQuery = true)
+                   "WHERE asset_id = :assetId and process_month = :month and process_year = :year", nativeQuery = true)
     void bulkUpdateAsset(
             @Param("assetId") String assetId,
             @Param("assetName") String assetName,
@@ -31,9 +31,20 @@ public interface SummaryProcessRepository extends JpaRepository<SummaryProcess, 
             @Param("checkerName") String checkerName,
             @Param("fnaId") String fnaId,
             @Param("fnaMaker") String fnaMaker,
-            @Param("reconciliationType") String reconciliationType
+            @Param("reconciliationType") String reconciliationType,
+            @Param("month") String month,
+            @Param("year") String year
     );
 
     @Query(value = "Select asset_id from summary_process where asset_id in :assetId", nativeQuery = true)
     Set<String> findExistingAssetId(@Param("assetId") Set<String> assetId);
+    @Query(value = "Select asset_id from summary_process where status = :status and process_month = :month " +
+            "and process_year = :year and sol_id = :sol",
+            nativeQuery = true)
+    List<Object[]> findExistingAssetByStatus(
+            @Param("status") String status,
+            @Param("month") String month,
+            @Param("year") String year,
+            @Param("sol") String solId
+    );
 }

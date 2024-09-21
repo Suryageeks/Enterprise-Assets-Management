@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class Initiateimpl implements InitiateService {
 
-
     private final InitiateRepository initiate;
 
     @Override
