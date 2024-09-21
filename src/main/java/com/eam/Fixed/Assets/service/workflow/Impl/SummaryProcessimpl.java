@@ -53,7 +53,7 @@ public class SummaryProcessimpl implements SummaryProcessService {
 
     }
 
-    private void batchInsertAsset(List<Object[]> assets){
+    public void batchInsertAsset(List<Object[]> assets){
         List<SummaryProcess> summaryProcesses = assets.stream()
                 .map(asset -> {
                     SummaryProcess summaryProcess = new SummaryProcess();
@@ -75,7 +75,34 @@ public class SummaryProcessimpl implements SummaryProcessService {
         summaryProcessRepository.saveAll(summaryProcesses);
     }
 
-    private void batchUpdateAssets(List<Object[]> assets){
+    public void batchUpdateAssets(List<Object[]> assets){
+        assets.forEach(
+                asset -> {
+                    WorkflowStatusEnum status = WorkflowStatusEnum.valueOf(asset[4].toString());
+                    if(status == WorkflowStatusEnum.PC){
+                        status = WorkflowStatusEnum.PFM;
+                    }
+                    else if (status == WorkflowStatusEnum.PFM) {
+                        status = WorkflowStatusEnum.END;
+                    }
+                    summaryProcessRepository.bulkUpdateAsset(
+                            asset[0].toString(),
+                            asset[1].toString(),
+                            asset[2].toString(),
+                            asset[3].toString(),
+                            status,
+                            asset[5].toString(),
+                            asset[6].toString(),
+                            asset[7].toString(),
+                            asset[8].toString(),
+                            asset[9].toString(),
+                            asset[10].toString()
+                    );
+                }
+        );
+    }
+
+    public void batchUpdateAssetsInSendBack(List<Object[]> assets){
         assets.forEach(
                 asset -> {
                     summaryProcessRepository.bulkUpdateAsset(
@@ -83,7 +110,7 @@ public class SummaryProcessimpl implements SummaryProcessService {
                             asset[1].toString(),
                             asset[2].toString(),
                             asset[3].toString(),
-                            WorkflowStatusEnum.valueOf(asset[4].toString()),
+                            WorkflowStatusEnum.SB,
                             asset[5].toString(),
                             asset[6].toString(),
                             asset[7].toString(),

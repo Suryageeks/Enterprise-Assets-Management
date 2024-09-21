@@ -4,5 +4,6 @@ public enum WorkflowStatusEnum {
     PM,
     PC,
     PFM,
-    SB
+    SB,
+    END
 }

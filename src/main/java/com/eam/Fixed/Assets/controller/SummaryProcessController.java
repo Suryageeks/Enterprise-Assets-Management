@@ -18,10 +18,20 @@ import java.util.List;
 public class SummaryProcessController {
     private SummaryProcessService summaryProcessService;
 
-    @PatchMapping("/")
+    @PatchMapping("/approve")
     public ResponseEntity<String> setWorkflow(@RequestBody List<Object[]> assets){
         try {
             summaryProcessService.bulkInsertOrUpdateAssets(assets);
+            return new ResponseEntity<>("Data processed successfully", HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("Data processing failed, Error" + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PatchMapping("/send-back")
+    public ResponseEntity<String> setWorkflowSendBack(@RequestBody List<Object[]> assets){
+        try {
+            summaryProcessService.batchUpdateAssetsInSendBack(assets);
             return new ResponseEntity<>("Data processed successfully", HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>("Data processing failed, Error" + e.getMessage(), HttpStatus.BAD_REQUEST);
