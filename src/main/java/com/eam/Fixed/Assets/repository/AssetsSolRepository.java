@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AssetsSolRepository extends JpaRepository<AssetsSol,Long> {
+    boolean existsByAssetIdAndSolId(String assetId, String solId);
 }
