@@ -1,6 +1,7 @@
 package com.eam.Fixed.Assets.controller;
 
 import com.eam.Fixed.Assets.dto.UsersDto;
+import com.eam.Fixed.Assets.service.KeycloakService;
 import com.eam.Fixed.Assets.service.UsersService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -15,9 +16,13 @@ import java.util.List;
 @RequestMapping("api/user")
 public class UserController {
     private UsersService usersService;
-
+    private KeycloakService keycloakService;
     @PostMapping("/create")
-    public ResponseEntity<UsersDto> createUser(@Valid @RequestBody UsersDto usersDto){
+    public ResponseEntity<Object> createUser(@Valid @RequestBody UsersDto usersDto){
+//        boolean keycloak = keycloakService.createKeycloakUser(usersDto);
+//        if(!keycloak){
+//            return new ResponseEntity<>("Failed to create user in keycloak",HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
         UsersDto saveUser = usersService.createUser(usersDto);
         return new ResponseEntity<>(saveUser, HttpStatus.CREATED);
     }
