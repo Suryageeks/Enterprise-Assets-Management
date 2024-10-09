@@ -11,31 +11,32 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class KeycloakUtil {
-    Keycloak keycloak;
+    static Keycloak keycloak;
     @Value("${server_uri}")
-    private String serverUrl;
+    private static String serverUrl;
     @Value("${realm}")
-    private String realm;
+    private static String realm;
     @Value("${name}")
-    private String username;
+    private static String username;
     @Value("${password}")
-    private String password;
+    private static String password;
     @Value("${grant-type}")
-    private String grantType;
+    private static String grantType;
     @Value("${client-id}")
-    private String clientID;
+    private static String clientID;
 
-    public Keycloak getKeycloakInstance(){
+    public static Keycloak getKeycloakInstance(){
         if(keycloak==null){
             keycloak = KeycloakBuilder.builder()
                     .serverUrl(serverUrl).realm(realm).username(username).password(password)
                     .grantType(grantType).clientId(clientID).build();
         }
         return keycloak;
+    }
+
+    public static String getRealm(){
+        return realm;
     }
 
 }

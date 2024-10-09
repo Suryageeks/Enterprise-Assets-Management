@@ -1,36 +1,35 @@
 package com.eam.Fixed.Assets.service.impl;
 
 import com.eam.Fixed.Assets.config.KeycloakUtil;
+import com.eam.Fixed.Assets.dto.UsersDto;
 import jakarta.ws.rs.core.Response;
-import org.keycloak.admin.client.resource.RealmResource;
-import org.keycloak.admin.client.resource.UserResource;
-import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-
+@Service
 public class Keycloakimpl {
+
     @Autowired
-    private KeycloakUtil keycloakUtil;
+    private KeycloakPasswordimpl keycloakPasswordimpl;
 
-    public boolean createKeycloakUser(String name,String email,String password){
-        RealmResource realmResource = keycloakUtil.getKeycloakInstance().realm(keycloakUtil.getRealm());
-        UserResource userResource = realmResource.users();
+    public boolean createKeycloakUser(UsersDto usersDto){
+        try{
+            UserRepresentation user = new UserRepresentation();
+            user.setUsername(usersDto.getEmpId());
+            user.setEmail(usersDto.getEmail());
+            user.setFirstName(usersDto.getEmpName());
+            user.setLastName("");
+            user.setCredentials(Collections.singletonList(keycloakPasswordimpl.passwordCredentials(usersDto.getPassword())));
 
-        UserRepresentation user = new UserRepresentation();
-        user.setUsername(name);
-        user.setEmail(email);
-        user.setCredentials(Collections.singletonList(passwordCredentials(password)));
-
-//        Response response = userResource.crea
+            Response response = KeycloakUtil.getKeycloakInstance().realm(KeycloakUtil.getRealm()).users().create(user);
+            return response.getStatus() == 200 || response.getStatus() == 201;
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
     }
 
-    public CredentialRepresentation passwordCredentials(String password){
-        CredentialRepresentation passwordCred = new CredentialRepresentation();
-        passwordCred.setTemporary(false);
-        passwordCred.setType(CredentialRepresentation.PASSWORD);
-        passwordCred.setValue(password);
-        return passwordCred;
-    }
 }

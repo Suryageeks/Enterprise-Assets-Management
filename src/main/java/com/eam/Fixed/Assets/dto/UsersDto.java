@@ -18,6 +18,8 @@ public class UsersDto {
     @NotBlank(message = "Emp ID cannot be empty")
     @Digits(fraction = 0,integer = 10,message = "Emp ID must be present")
     private String empId;
+    @NotBlank(message = "Emp Email cannot be blank")
+    private String email;
     @NotBlank(message = "Emp Name cannot be blank")
     private String empName;
     private String address;
@@ -28,4 +30,6 @@ public class UsersDto {
     private String designation;
     @Enumerated(EnumType.STRING)
     private String status;
+    @NotBlank(message = "Password cannot be blank")
+    private String password;
 }
