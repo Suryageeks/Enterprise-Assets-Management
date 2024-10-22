@@ -4,6 +4,7 @@ import com.eam.Fixed.Assets.dto.UsersDto;
 import com.eam.Fixed.Assets.service.UsersService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,4 +52,10 @@ public class UserController {
         String user = usersService.getStatus(empId);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
+
+    @GetMapping("/login")
+    public String tryLogin(){
+        return "Test Login using AZURE";
+    }
+
 }

@@ -14,9 +14,12 @@ import com.eam.Fixed.Assets.service.UserRoleSolService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -33,7 +36,8 @@ public class UserRoleSolimpl implements UserRoleSolService {
     private final RolesRepository rolesRepository;
     @Autowired
     private final BranchRepository branchRepository;
-
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public UserRoleSolDto mapUsers(UserRoleSolDto users) {
@@ -80,5 +84,10 @@ public class UserRoleSolimpl implements UserRoleSolService {
         return UserRoleSolMapper.MAPPER.mapToUserRoleSolMapperDto(userInfo);
     }
 
+    // For setting up the login credentials globally
+    public Map<String, Object> getUserDetails(String username) {
+        String sql = "select emp_id,emp_name,branch_name,sol_id,role_name from user_role_sol_mapper where emp_id = ?";
+        return jdbcTemplate.queryForMap(sql, username);
+    }
 
 }

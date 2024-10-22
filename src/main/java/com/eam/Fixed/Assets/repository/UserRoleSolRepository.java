@@ -13,4 +13,7 @@ public interface UserRoleSolRepository extends JpaRepository<UserRoleSol, Long> 
 
     @Query("select u from UserRoleSol u where u.user = :empId or u.empName = :empName")
     Optional<UserRoleSol> findByUserOrEmpName(@Param("empId") String empId, @Param("empName") String empName);
+
+//    @Query("select u.emp_id,u.emp_name,u.branch_name,u.sol_id,u.role_name from UserRoleSol u where u.user = :empId")
+//    Optional<UserRoleSol> getUserDetails(@Param("empId") String empId);
 }
