@@ -12,9 +12,8 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/roles")
-public class
-RolesController {
+@RequestMapping("login/oauth2/code/api/roles")
+public class RolesController{
     private RolesService rolesService;
 
     @PostMapping

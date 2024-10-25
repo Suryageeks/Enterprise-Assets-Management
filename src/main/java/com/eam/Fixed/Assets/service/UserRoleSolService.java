@@ -4,6 +4,7 @@ import com.eam.Fixed.Assets.dto.UserRoleSolDto;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface UserRoleSolService {
     UserRoleSolDto mapUsers(UserRoleSolDto users);
@@ -11,7 +12,7 @@ public interface UserRoleSolService {
     List<UserRoleSolDto> getData();
 
     UserRoleSolDto getUserByIdOrName(String idOrName);
-    public Map<String, Object> getUserDetails(String username);
+    public Optional<Map<String,String>> getUserDetails(String username);
 
 //    UserRoleSolDto updateDetails(String idOrName, UserRoleSolDto details);
 }

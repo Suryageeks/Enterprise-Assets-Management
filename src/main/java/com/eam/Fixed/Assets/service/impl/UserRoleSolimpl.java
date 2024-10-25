@@ -15,8 +15,11 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,9 +88,28 @@ public class UserRoleSolimpl implements UserRoleSolService {
     }
 
     // For setting up the login credentials globally
-    public Map<String, Object> getUserDetails(String username) {
+    public Optional<Map<String,String>> getUserDetails(String username) {
         String sql = "select emp_id,emp_name,branch_name,sol_id,role_name from user_role_sol_mapper where emp_id = ?";
-        return jdbcTemplate.queryForMap(sql, username);
+        try{
+            Map<String,String> mapUsers = jdbcTemplate.queryForObject(
+                    sql,
+                    new Object[]{username},
+                    new RowMapper<Map<String, String>>() {
+                        @Override
+                        public Map<String, String> mapRow(ResultSet rs, int rowNum) throws SQLException {
+                            Map<String,String> userMap = new HashMap<>();
+                            userMap.put("sol_id",rs.getString("sol_id"));
+                            userMap.put("role",rs.getString("role_name"));
+                            return userMap;
+                        }
+                    }
+            );
+            return Optional.ofNullable(mapUsers);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return Optional.empty();
+        }
     }
 
 }
