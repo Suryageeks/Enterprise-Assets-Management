@@ -28,7 +28,7 @@ public class PeriodActivityController  {
         return new ResponseEntity<>(getAllPeriod, HttpStatus.OK);
     }
     @PutMapping("/update-period/{month}/{year}")
-    public ResponseEntity<PeriodActivityDto> updarPeriodActivity(@PathVariable("month") String month,@PathVariable("year") String year,@Valid @RequestBody PeriodActivityDto periodActivityDto) {
+    public ResponseEntity<PeriodActivityDto> updatePeriodActivity(@PathVariable("month") String month,@PathVariable("year") String year,@Valid @RequestBody PeriodActivityDto periodActivityDto) {
         PeriodActivityDto result = periodActivityService.updatePeriodActivity(month,year,periodActivityDto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
