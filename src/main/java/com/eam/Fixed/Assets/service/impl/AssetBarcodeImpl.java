@@ -1,6 +1,7 @@
 package com.eam.Fixed.Assets.service.impl;
 
 import com.aspose.barcode.generation.BarcodeGenerator;
+
 import com.aspose.barcode.generation.CodeLocation;
 import com.aspose.barcode.generation.EncodeTypes;
 import com.eam.Fixed.Assets.dto.AssetBarcodeDto;

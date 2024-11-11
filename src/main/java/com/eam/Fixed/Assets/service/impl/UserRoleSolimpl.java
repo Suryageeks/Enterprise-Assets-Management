@@ -88,18 +88,24 @@ public class UserRoleSolimpl implements UserRoleSolService {
     }
 
     // For setting up the login credentials globally
-    public Optional<Map<String,String>> getUserDetails(String username) {
-        String sql = "select emp_id,emp_name,branch_name,sol_id,role_name from user_role_sol_mapper where emp_id = ?";
+    public Optional<Map<String,String>> getUserDetails(String email) {
+        String sql = "select u.sol_id,u.emp_name,u.emp_id,u.role_id,u.role_name,us.emp_email from user_role_sol_mapper u\n" +
+                        "left outer join users us on us.emp_id = u.emp_id\n" +
+                        "where us.emp_email = ?";
         try{
             Map<String,String> mapUsers = jdbcTemplate.queryForObject(
                     sql,
-                    new Object[]{username},
+                    new Object[]{email},
                     new RowMapper<Map<String, String>>() {
                         @Override
                         public Map<String, String> mapRow(ResultSet rs, int rowNum) throws SQLException {
                             Map<String,String> userMap = new HashMap<>();
                             userMap.put("sol_id",rs.getString("sol_id"));
                             userMap.put("role",rs.getString("role_name"));
+                            userMap.put("emp_id",rs.getString("emp_id"));
+                            userMap.put("emp_name",rs.getString("emp_name"));
+                            userMap.put("emp_email",rs.getString("emp_email"));
+                            userMap.put("role_id",rs.getString("role_id"));
                             return userMap;
                         }
                     }
