@@ -23,5 +23,9 @@ public class  FixedAssetsApplication {
 		return Collections.
 				singletonMap("name", principal.getAttribute("name"));
 	}
+	@GetMapping("/logoutapp")
+	public String logout(){
+		return "You have been logged out successfully!";
+	}
 
 }
