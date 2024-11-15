@@ -1,23 +1,25 @@
 package com.eam.Fixed.Assets.service.impl;
 
-import com.eam.Fixed.Assets.service.RoleStatusService;
+import com.eam.Fixed.Assets.service.RoleStatusStrategyService;
+import com.eam.Fixed.Assets.service.roleStatusMapper.CheckerRoleStatus;
+import com.eam.Fixed.Assets.service.roleStatusMapper.FNAMakerRoleStatus;
+import com.eam.Fixed.Assets.service.roleStatusMapper.MakerRoleStatus;
 import com.eam.Fixed.Assets.utils.RoleEnum;
 import com.eam.Fixed.Assets.utils.WorkflowStatusEnum;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 @Service
-public class RoleStatusimpl implements RoleStatusService {
-    @Override
-    public List<String> getRoleStatus(String roleName) {
+public class RoleStatusFactoryimpl{
+    public RoleStatusStrategyService getRoleStatusStrategy(String roleName) {
         try {
             switch (RoleEnum.valueOf(roleName.toUpperCase())){
                 case MAKER :
-                    return Arrays.asList(WorkflowStatusEnum.PM.name(),WorkflowStatusEnum.SB.name());
+                    return new MakerRoleStatus();
                 case CHECKER:
-                    return Collections.singletonList(WorkflowStatusEnum.PC.name());
+                    return new CheckerRoleStatus();
                 case FNAMAKER:
-                    return Collections.singletonList(WorkflowStatusEnum.PFM.name());
+                    return new FNAMakerRoleStatus();
                 default:
                     throw new RuntimeException("Unknown Role Found" + roleName);
             }

@@ -1,11 +1,10 @@
 package com.eam.Fixed.Assets.service.workflow.Impl;
 
-import com.eam.Fixed.Assets.dto.SummaryProcessDto;
 import com.eam.Fixed.Assets.entity.SummaryProcess;
 import com.eam.Fixed.Assets.repository.workflow.SummaryProcessRepository;
-import com.eam.Fixed.Assets.service.RoleStatusService;
+import com.eam.Fixed.Assets.service.RoleStatusStrategyService;
+import com.eam.Fixed.Assets.service.impl.RoleStatusFactoryimpl;
 import com.eam.Fixed.Assets.service.workflow.SummaryProcessService;
-import com.eam.Fixed.Assets.utils.RoleEnum;
 import com.eam.Fixed.Assets.utils.WorkflowStatusEnum;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
@@ -27,7 +26,7 @@ public class SummaryProcessimpl implements SummaryProcessService {
     @Autowired
     private final SummaryProcessRepository summaryProcessRepository;
     @Autowired
-    private final RoleStatusService roleStatusService;
+    private final RoleStatusFactoryimpl roleStatusFactory;
 
     @Override
     @Modifying
@@ -145,7 +144,9 @@ public class SummaryProcessimpl implements SummaryProcessService {
             throw new RuntimeException("Sol ID Not Found !!");
         }
 
-        List<String> status = roleStatusService.getRoleStatus(role);
+        RoleStatusStrategyService strategy = roleStatusFactory.getRoleStatusStrategy(role);
+        List<String> status = strategy.getRoleStatus();
+        
         return summaryProcessRepository.findExistingAssetByStatus(status, month, year, sol);
     }
 
