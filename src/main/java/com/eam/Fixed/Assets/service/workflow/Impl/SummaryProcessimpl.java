@@ -3,6 +3,7 @@ package com.eam.Fixed.Assets.service.workflow.Impl;
 import com.eam.Fixed.Assets.dto.SummaryProcessDto;
 import com.eam.Fixed.Assets.entity.SummaryProcess;
 import com.eam.Fixed.Assets.repository.workflow.SummaryProcessRepository;
+import com.eam.Fixed.Assets.service.RoleStatusService;
 import com.eam.Fixed.Assets.service.workflow.SummaryProcessService;
 import com.eam.Fixed.Assets.utils.RoleEnum;
 import com.eam.Fixed.Assets.utils.WorkflowStatusEnum;
@@ -25,7 +26,8 @@ public class SummaryProcessimpl implements SummaryProcessService {
 
     @Autowired
     private final SummaryProcessRepository summaryProcessRepository;
-
+    @Autowired
+    private final RoleStatusService roleStatusService;
 
     @Override
     @Modifying
@@ -142,15 +144,8 @@ public class SummaryProcessimpl implements SummaryProcessService {
         if(sol == null || sol.isEmpty()){
             throw new RuntimeException("Sol ID Not Found !!");
         }
-        
-        String status =  "";
-        if(role.equalsIgnoreCase(RoleEnum.MAKER.name())){
-            status = WorkflowStatusEnum.PM.name();
-        } else if (role.equalsIgnoreCase(RoleEnum.CHECKER.name())) {
-            status = WorkflowStatusEnum.PC.name();
-        } else if (role.equalsIgnoreCase(RoleEnum.FNAMAKER.name())) {
-            status = WorkflowStatusEnum.PFM.name();
-        }
+
+        List<String> status = roleStatusService.getRoleStatus(role);
         return summaryProcessRepository.findExistingAssetByStatus(status, month, year, sol);
     }
 

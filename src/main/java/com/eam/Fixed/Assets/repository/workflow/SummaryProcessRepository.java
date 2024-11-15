@@ -38,11 +38,12 @@ public interface SummaryProcessRepository extends JpaRepository<SummaryProcess, 
 
     @Query(value = "Select asset_id from summary_process where asset_id in :assetId", nativeQuery = true)
     Set<String> findExistingAssetId(@Param("assetId") Set<String> assetId);
-    @Query(value = "Select asset_id from summary_process where status = :status and process_month = :month " +
+
+    @Query(value = "Select asset_id from summary_process where status IN :status and process_month = :month " +
             "and process_year = :year and sol_id = :sol",
             nativeQuery = true)
     List<Object[]> findExistingAssetByStatus(
-            @Param("status") String status,
+            @Param("status") List<String> status,
             @Param("month") String month,
             @Param("year") String year,
             @Param("sol") String solId
