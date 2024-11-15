@@ -4,7 +4,9 @@ import com.eam.Fixed.Assets.dto.SummaryProcessDto;
 import com.eam.Fixed.Assets.entity.SummaryProcess;
 import com.eam.Fixed.Assets.repository.workflow.SummaryProcessRepository;
 import com.eam.Fixed.Assets.service.workflow.SummaryProcessService;
+import com.eam.Fixed.Assets.utils.RoleEnum;
 import com.eam.Fixed.Assets.utils.WorkflowStatusEnum;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +79,8 @@ public class SummaryProcessimpl implements SummaryProcessService {
         summaryProcessRepository.saveAll(summaryProcesses);
     }
 
+    private HttpSession session;
+
     public void batchUpdateAssets(List<Object[]> assets){
         assets.forEach(
                 asset -> {
@@ -129,7 +133,24 @@ public class SummaryProcessimpl implements SummaryProcessService {
     }
 
     @Override
-    public List<Object[]> getAssetsByStatus(String status, String month, String year, String sol) {
+    public List<Object[]> getAssetsByStatus(String month, String year) {
+        String role = (String) session.getAttribute("role");
+        String sol = (String) session.getAttribute("solid");
+        if(role == null || role.isEmpty()){
+            throw new RuntimeException("Role Name Not Found !!");
+        }
+        if(sol == null || sol.isEmpty()){
+            throw new RuntimeException("Sol ID Not Found !!");
+        }
+        
+        String status =  "";
+        if(role.equalsIgnoreCase(RoleEnum.MAKER.name())){
+            status = WorkflowStatusEnum.PM.name();
+        } else if (role.equalsIgnoreCase(RoleEnum.CHECKER.name())) {
+            status = WorkflowStatusEnum.PC.name();
+        } else if (role.equalsIgnoreCase(RoleEnum.FNAMAKER.name())) {
+            status = WorkflowStatusEnum.PFM.name();
+        }
         return summaryProcessRepository.findExistingAssetByStatus(status, month, year, sol);
     }
 

@@ -34,12 +34,10 @@ public class SummaryProcessController {
             return new ResponseEntity<>("Data processing failed, Error" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping("/get-assets/{status}/{month}/{year}/{sol}")
-    public ResponseEntity<List<Object[]>> getAssetByStatusAsPerRole(@PathVariable("status") String status,
-                                                                    @PathVariable("month") String month,
-                                                                    @PathVariable("year") String year,
-                                                                    @PathVariable("sol") String solId){
-        List<Object[]> getAssets = summaryProcessService.getAssetsByStatus(status, month, year, solId);
+    @GetMapping("/get-assets/{month}/{year}")
+    public ResponseEntity<List<Object[]>> getAssetByStatusAsPerRole(@PathVariable("month") String month,
+                                                                    @PathVariable("year") String year){
+        List<Object[]> getAssets = summaryProcessService.getAssetsByStatus(month, year);
         if(getAssets.isEmpty() || getAssets == null){
             return ResponseEntity.noContent().build();
         }
