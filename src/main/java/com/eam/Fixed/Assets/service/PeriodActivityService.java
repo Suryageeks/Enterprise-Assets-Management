@@ -8,4 +8,5 @@ public interface PeriodActivityService {
     PeriodActivityDto createPeriodActivity(PeriodActivityDto periodActivityDto);
     List<PeriodActivityDto> getPeriodActivity();
     PeriodActivityDto updatePeriodActivity(String month,String year,PeriodActivityDto periodActivityDto);
+    PeriodActivityDto getSinglePeriodActivity();
 }

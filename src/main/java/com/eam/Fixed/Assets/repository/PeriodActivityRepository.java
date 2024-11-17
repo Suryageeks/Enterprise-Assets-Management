@@ -8,4 +8,6 @@ import java.util.Optional;
 @Repository
 public interface PeriodActivityRepository extends JpaRepository<PeriodActivity, Long> {
     Optional<PeriodActivity> findByProcessMonthAndProcessYear(String processMonth, String processYear);
+
+    PeriodActivity findByPeriodStatus(String o);
 }

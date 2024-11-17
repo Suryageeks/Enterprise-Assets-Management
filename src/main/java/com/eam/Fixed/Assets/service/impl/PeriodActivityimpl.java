@@ -48,4 +48,12 @@ public class PeriodActivityimpl implements PeriodActivityService {
             throw new RuntimeException("Period Not Available");
         }
     }
+
+    @Override
+    public PeriodActivityDto getSinglePeriodActivity() {
+        PeriodActivity getPeriod = periodActivityRepository.findByPeriodStatus("Open");
+        return PeriodActivityMapper.MAPPER.mapToPeriodActivityDto(getPeriod);
+    }
+
+
 }

@@ -32,4 +32,9 @@ public class PeriodActivityController  {
         PeriodActivityDto result = periodActivityService.updatePeriodActivity(month,year,periodActivityDto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+    @GetMapping("/single-period")
+    public ResponseEntity<PeriodActivityDto> getOnePeriod(){
+        PeriodActivityDto getOnePeriod = periodActivityService.getSinglePeriodActivity();
+        return new ResponseEntity<>(getOnePeriod, HttpStatus.OK);
+    }
 }
