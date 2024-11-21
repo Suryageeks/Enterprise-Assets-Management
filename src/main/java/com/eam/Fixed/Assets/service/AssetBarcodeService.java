@@ -6,4 +6,5 @@ public interface AssetBarcodeService {
     byte[] barcodeGeneration(String assetId);
     AssetBarcodeDto barcodeCreation(AssetBarcodeDto assetBarcodeDto);
     AssetBarcodeDto checkerApprover(AssetBarcodeDto assetBarcodeDto);
+    String readBarcode(byte[] barcodeValue);
 }

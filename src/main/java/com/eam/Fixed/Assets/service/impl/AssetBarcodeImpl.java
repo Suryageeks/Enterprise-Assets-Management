@@ -1,5 +1,9 @@
 package com.eam.Fixed.Assets.service.impl;
 
+import com.aspose.barcode.barcoderecognition.BarCodeReader;
+import com.aspose.barcode.barcoderecognition.BarCodeResult;
+import com.aspose.barcode.barcoderecognition.DecodeType;
+import com.aspose.barcode.generation.BarCodeImageFormat;
 import com.aspose.barcode.generation.BarcodeGenerator;
 import com.aspose.barcode.generation.CodeLocation;
 import com.aspose.barcode.generation.EncodeTypes;
@@ -12,12 +16,11 @@ import lombok.AllArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-@Transactional
 public class AssetBarcodeImpl implements AssetBarcodeService {
     private AssetBarcodeRepository assetBarcodeRepository;
 
@@ -35,13 +38,14 @@ public class AssetBarcodeImpl implements AssetBarcodeService {
         barcodeGenerator.getParameters().getBarcode().getCodeTextParameters().setLocation(CodeLocation.BELOW);
 
         try(ByteArrayOutputStream baos = new ByteArrayOutputStream()){
-            barcodeGenerator.save(baos.toString());
+            barcodeGenerator.save(baos.toString(), BarCodeImageFormat.JPEG);
             return  baos.toByteArray();
         } catch (IOException e) {
             throw new RuntimeException("Failed to generate barcode image", e);
         }
     }
 
+    @Transactional
     @Override
     public AssetBarcodeDto barcodeCreation(AssetBarcodeDto assetBarcodeDto) {
         AssetsRegistry assetsRegistry = assetsRegistryRepository.findByAssetId(assetBarcodeDto.getAssetId()).orElseThrow(
@@ -101,5 +105,17 @@ public class AssetBarcodeImpl implements AssetBarcodeService {
         return assetBarcodeDto1;
     }
 
-
+    @Override
+    @Transactional
+    public String readBarcode(byte[] barcodeValue){
+        try(ByteArrayInputStream bias = new ByteArrayInputStream(barcodeValue)){
+            BarCodeReader barCodeReader = new BarCodeReader(bias, DecodeType.ALL_SUPPORTED_TYPES);
+            for(BarCodeResult res : barCodeReader.readBarCodes()){
+                return res.getCodeText();
+            }
+        }catch (IOException e){
+            throw new RuntimeException("Failed to read barcode: "+ e.getMessage());
+        }
+        throw new RuntimeException("No barcode detected in the image");
+    }
 }

@@ -43,9 +43,6 @@ public class AssetBarcode {
     @Column(name = "approved_checker_name", nullable = false)
     private String checkerName;
 
-//    @Column(name = "barcode", nullable = true)
-//    private String barcode;
-
     @Lob
     @Column(name = "barcode_image", nullable = true)
     private byte[] barcodeImage;
