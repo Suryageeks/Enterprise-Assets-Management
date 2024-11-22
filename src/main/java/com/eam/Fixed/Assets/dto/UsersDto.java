@@ -1,5 +1,6 @@
 package com.eam.Fixed.Assets.dto;
 
+import com.eam.Fixed.Assets.utils.StatusEnum;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Digits;
@@ -27,5 +28,5 @@ public class UsersDto {
     private int mobileNumber;
     private String designation;
     @Enumerated(EnumType.STRING)
-    private String status;
+    private StatusEnum status;
 }

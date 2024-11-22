@@ -61,7 +61,7 @@ public class Usersimpl implements UsersService {
         user.setDesignation(usersDto.getDesignation());
         user.setMobileNumber(usersDto.getMobileNumber());
         user.setState(usersDto.getState());
-        user.setStatus(StatusEnum.valueOf(usersDto.getStatus()));
+        user.setStatus(StatusEnum.valueOf(String.valueOf(usersDto.getStatus())));
 
         Users updateDetails = userRepository.save(user);
         return UserMapper.MAPPER.mapToUsersDto(updateDetails);
